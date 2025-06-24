@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './Components/drawerComponent.dart';
 import 'ListView.dart';
+import 'SearchBar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,23 +35,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 🔍 Search Field
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  suffixIcon: const Icon(Icons.search),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  hintText: "Search",
-                ),
-              ),
-            ),
+            searchBar(),
 
             const SizedBox(height: 20),
 
