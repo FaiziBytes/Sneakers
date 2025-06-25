@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import "package:sneakers/Components/cartlist.dart";
 
-class Listview extends StatelessWidget {
+class Listview extends StatefulWidget {
   Listview({super.key});
+
+  @override
+  State<Listview> createState() => _ListviewState();
+}
+
+class _ListviewState extends State<Listview> {
   List<String> imagesLinks = [
     "assets/NikeAir1.png",
     "assets/Nike1.png",
@@ -9,6 +16,7 @@ class Listview extends StatelessWidget {
     "assets/NikeJordan.png",
     "assets/NikeAirMaxDNSafariElectricOrange.png"
   ];
+
   List<String> shoesNameLinks = [
     "Nike Air Force 1",
     "Nike Air 1",
@@ -16,6 +24,7 @@ class Listview extends StatelessWidget {
     "Nike Jordan",
     "Nike Air Max DN Safari"
   ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -78,7 +87,10 @@ class Listview extends StatelessWidget {
                                 ),
                                 backgroundColor: Colors.black,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                namesOfItems.add(shoesNameLinks[index]);
+                                imagesForCarts.add(imagesLinks[index]);
+                              },
                               child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
