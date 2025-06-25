@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import './Components/drawerComponent.dart';
-import 'ListView.dart';
-import 'SearchBar.dart';
+import 'shop.dart';
+import 'cart.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Widget> Pages = [Shop(), Cart()];
+  int selectedIndex = 0;
+  void navigateBottomBar(int value) {
+    setState(() {
+      selectedIndex = value;
+    });
+  }
+
+  double opacity = 1;
+  // double opacity = 0;
+  // void changeColor() {
+  //   setState(() {
+  //     if (opacity == 0) {
+  //       opacity = 1;
+  //     } else {
+  //       opacity = 0;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF3DCDCDC),
+      backgroundColor: const Color(0xff3dcdcdc),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF3DCDCDC),
+        backgroundColor: const Color(0xff3dcdcdc).withOpacity(opacity),
       ),
       drawer: Drawer(
         backgroundColor: Colors.white,
@@ -30,52 +56,36 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 🔍 Search Field
-            searchBar(),
-
-            const SizedBox(height: 20),
-
-            // ✈️ Tagline
-            const Center(
-              child: Text(
-                "Everyone flies.. some fly longer",
-                style: TextStyle(fontSize: 17),
-                textAlign: TextAlign.center,
+      body: Pages[selectedIndex],
+      bottomNavigationBar: SizedBox(
+        child: GNav(
+            padding: EdgeInsets.all(25),
+            backgroundColor: const Color(0xff3dcdcdc),
+            activeColor: Colors.black,
+            color: Colors.grey,
+            gap: 10,
+            iconSize: 27,
+            curve: Curves.easeInCubic,
+            mainAxisAlignment: MainAxisAlignment.center,
+            onTabChange: (value) {
+              navigateBottomBar(value);
+            },
+            tabs: [
+              GButton(
+                borderRadius: BorderRadius.circular(15),
+                backgroundColor: Colors.white,
+                icon: Icons.home,
+                text: "Shop",
+                textSize: 17,
+                textStyle: TextStyle(fontWeight: FontWeight.bold),
               ),
-            ),
-
-            const SizedBox(height: 25),
-
-            // 🔥 Hot Picks Title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: const [
-                  Text(
-                    "Hot Picks 🔥",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  Spacer(),
-                  Text(
-                    "See All",
-                    style: TextStyle(fontSize: 20, color: Colors.blue),
-                  ),
-                ],
+              GButton(
+                borderRadius: BorderRadius.circular(15),
+                backgroundColor: Colors.white,
+                icon: Icons.shopping_bag,
+                text: "Cart",
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // 🏷️ ListView Builder (Horizontal Scroll)
-
-            Listview(),
-            const SizedBox(height: 20),
-          ],
-        ),
+            ]),
       ),
     );
   }
